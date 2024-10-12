@@ -38,3 +38,24 @@ class Timestamp:
             hour=hour,
             minute=minute
         )
+
+def nul_and_space_bidi_strip(input_str: str) -> str:
+    return input_str.lstrip().lstrip("\0").rstrip().rstrip("\0")
+
+def replace_substring(input_str: str, replace_at_idx: int, string_to_insert: str) -> str:
+    """Replaces a substring of a string with another string.
+    Useful for rendering ticket layouts.
+    """
+
+    if replace_at_idx > (len(input_str) - 1):
+        raise ValueError("Point to replace string at is out of bounds")
+    if (replace_at_idx + len(string_to_insert)) > (len(input_str) - 1):
+        raise ValueError("String to insert is out of bounds of input string")
+    
+    input_str_before = input_str[:replace_at_idx]
+    input_str_after = input_str[replace_at_idx+len(string_to_insert):]
+    output_str = input_str_before + string_to_insert + input_str_after
+
+    assert len(output_str) == len(input_str)
+
+    return output_str
